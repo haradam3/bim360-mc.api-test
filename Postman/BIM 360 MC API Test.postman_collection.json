@@ -1,0 +1,1155 @@
+{
+	"info": {
+		"_postman_id": "775a71ea-86b6-4b12-aeb1-fcb04df12987",
+		"name": "BIM 360 MC API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ModelSet",
+			"item": [
+				{
+					"name": "GET Modelsets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a2d57b5-0f62-4780-bb81-67757d1234aa",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"modelset_id\", body[\"modelSets\"][0].modelSetId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}} /modelsets",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}} ",
+								"modelsets"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "GET One Modelset",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET One Modelset versions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "990399ec-bd84-4303-a0e2-94183a957c95",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"modelset_v_id\", body[\"modelSetVersions\"][0].version)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "GET One Modelset One Version",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions/{{modelset_v_id}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions",
+								"{{modelset_v_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Modelset - input a folder urn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f76f05f-f299-4293-8c96-408d81d3f868",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"jobId\", body[\"jobId\"])",
+									"pm.environment.set(\"modelset_id\", body[\"modelSetId\"])"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \"ModelSetCreatedByAPI\",\n  \"description\": \"description\",\n  \"isDisabled\": true,\n  \"folders\": [\n    {\n      \"folderUrn\": \"urn:adsk.wipprod:fs.folder:co.tCoEVvA4Qa2BOPWfb-RYwg\"\n       \n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Job Result of Creating Modelset",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/jobs/{{jobId}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"jobs",
+								"{{jobId}}"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Modelset Version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f76f05f-f299-4293-8c96-408d81d3f868",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"jobId\", body[\"jobId\"])",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \n}"
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Job Result of Creating Modelset Version",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/jobs/{{jobId}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"jobs",
+								"{{jobId}}"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ClashResult",
+			"item": [
+				{
+					"name": "GET Clash Tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29208843-4a67-44fd-b90e-53f145a23be5",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"test_id\", body[\"tests\"][0].id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/tests",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"tests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET One Clash Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29208843-4a67-44fd-b90e-53f145a23be5",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"test_id\", body[\"tests\"][0].id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/tests/{{test_id}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"tests",
+								"{{test_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Clash Test Resources ( Change index of post-test script to download all resources)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29208843-4a67-44fd-b90e-53f145a23be5",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"",
+									"//change index to download resource one by one",
+									"var index = 0",
+									"//",
+									"pm.environment.set(\"one_resource_url\", body[\"resources\"][index][\"url\"])",
+									"pm.environment.set(\"x-amz-security-token\",",
+									"    body[\"resources\"][index][\"headers\"][\"x-amz-security-token\"]) ",
+									"pm.environment.set(\"X-Amz-Date\",",
+									"    body[\"resources\"][index][\"headers\"][\"X-Amz-Date\"])",
+									"pm.environment.set(\"X-Amz-Content-SHA256\",",
+									"    body[\"resources\"][index][\"headers\"][\"X-Amz-Content-SHA256\"]) ",
+									"pm.environment.set(\"Authorization\",",
+									"    body[\"resources\"][index][\"headers\"][\"Authorization\"]) "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/tests/{{test_id}}/resources",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"tests",
+								"{{test_id}}",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download One Test Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d8f5984-b54d-40ae-acad-e5f1936be286",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-security-token",
+								"type": "text",
+								"value": "{{x-amz-security-token}}"
+							},
+							{
+								"key": "X-Amz-Date",
+								"type": "text",
+								"value": "{{X-Amz-Date}}"
+							},
+							{
+								"key": "X-Amz-Content-SHA256",
+								"type": "text",
+								"value": "{{X-Amz-Content-SHA256}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{Authorization}}"
+							}
+						],
+						"url": {
+							"raw": "{{one_resource_url}}",
+							"host": [
+								"{{one_resource_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Clash Assigned",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/tests/{{test_id}}/clashes/assigned",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"tests",
+								"{{test_id}}",
+								"clashes",
+								"assigned"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "POST ModelSet Screenshot",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ea4672e-0554-491e-afa9-496c45f1e4ac",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"screenshot_id\", body[\"screenshot_id\"]);  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/Users/xiaodongliang/Documents/Temp-Screenshots/Screen Shot 2019-09-04 at 2.27.23 PM.png"
+							}
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/screenshots",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"screenshots"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Clash Assigned for Issue (provide params of viewer param of one model)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f97af416-7a48-435f-b4ec-e3f864781e16",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"jobId\", body[\"jobId\"]);  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n        {\n          \"id\": \"\",\n          \"title\": \"This is created by API for Clash\",\n          \"description\": \"This is created by API for Clash\",\n          \"documentLineageUrn\": \"urn:adsk.wipprod:dm.lineage:iEP86SJ_Q7y1Co_xOYHXiw\",\n           \"documentVersion\": \"1\",\n          \"assignedTo\": \"200902260532621\",\n          \"assignedToType\": \"User\" ,\n          \"pushpin\": { \n          \t\"type\": \"TwoDVectorPushpin\",\n                    \"location\": {\n                        \"x\": -47.00291442871094,\n                        \"y\": -54.98968505859375,\n                        \"z\": 114.99006652832031\n                    },\n                    \"objectId\": \"3673\"\n           },\n          \"clashes\": [\n            892\n          ],\n          \"issueTypeId\": \"\",\n          \"issueSubTypeId\": \"\",\n          \"rootCauseId\": \"\",\n          \"screenShots\": [\n            {{screenshot_id}}\n          ]\n        }\n      ]"
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/tests/{{test_id}}/clashes:assign",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"tests",
+								"{{test_id}}",
+								"clashes:assign"
+							]
+						},
+						"description": "get documentLineageUrn from GET one model set one version\nget params of viewer by client side app (click object inside Forge Viewer)\nget screenshot id from Post Modelset Screenshot"
+					},
+					"response": []
+				},
+				{
+					"name": "GET Job Status - Create Clash Issue",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/clash/v3/containers/{{mc_containter_id}}/clashes/jobs/{{jobId}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"clash",
+								"v3",
+								"containers",
+								"{{mc_containter_id}}",
+								"clashes",
+								"jobs",
+								"{{jobId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IndexAPI",
+			"item": [
+				{
+					"name": "GET One Modelset One Version Manifest",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset-index/v1/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions/{{modelset_v_id}}/manifest",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset-index",
+								"v1",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions",
+								"{{modelset_v_id}}",
+								"manifest"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Index Fields Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d8f5984-b54d-40ae-acad-e5f1936be286",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"x-amz-security-token\", body[\"headers\"][\"x-amz-security-token\"]); ",
+									"pm.environment.set(\"X-Amz-Date\", body[\"headers\"][\"X-Amz-Date\"]); ",
+									"pm.environment.set(\"X-Amz-Content-SHA256\", body[\"headers\"][\"X-Amz-Content-SHA256\"]); ",
+									"pm.environment.set(\"Authorization\", body[\"headers\"][\"Authorization\"]); ",
+									"pm.environment.set(\"one_index_file_url\", body[\"url\"]); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset-index/v1/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions/{{modelset_v_id}}/fields",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset-index",
+								"v1",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions",
+								"{{modelset_v_id}}",
+								"fields"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Index Fields File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d8f5984-b54d-40ae-acad-e5f1936be286",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"x-amz-security-token\", body[\"headers\"][\"x-amz-security-token\"]); ",
+									"pm.environment.set(\"X-Amz-Date\", body[\"headers\"][\"X-Amz-Date\"]); ",
+									"pm.environment.set(\"X-Amz-Content-SHA256\", body[\"headers\"][\"X-Amz-Content-SHA256\"]); ",
+									"pm.environment.set(\"Authorization\", body[\"headers\"][\"Authorization\"]); ",
+									"pm.environment.set(\"fieldsurl\", body[\"url\"]); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-security-token",
+								"value": "{{x-amz-security-token}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Amz-Date",
+								"value": "{{X-Amz-Date}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Amz-Content-SHA256",
+								"value": "{{X-Amz-Content-SHA256}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{one_index_file_url}}",
+							"host": [
+								"{{one_index_file_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start One Query of Modelset One Version Index  （input SQL S3 query)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4fea20eb-341b-4bdf-bea1-3136bb1abf29",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"jobId\", body[\"jobId\"]); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"statement\":\"select s.file, s.db, s.docs, s.id, s.p153cb174 as name, s.p5eddc473 as cat, s.p30db51f9 as fam, s.p13b6b3a0 as typ from s3object s\"\n}"
+						},
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset-index/v1/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/versions/{{modelset_v_id}}/indexes:query",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset-index",
+								"v1",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"versions",
+								"{{modelset_v_id}}",
+								"indexes:query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Index Query Job Result",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6cad8cfd-0091-456f-bc53-43fba9581323",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"x-amz-security-token\", body[\"resources\"][\"results\"][\"headers\"][\"x-amz-security-token\"]); ",
+									"pm.environment.set(\"X-Amz-Date\", body[\"resources\"][\"results\"][\"headers\"][\"X-Amz-Date\"]); ",
+									"pm.environment.set(\"X-Amz-Content-SHA256\", body[\"resources\"][\"results\"][\"headers\"][\"X-Amz-Content-SHA256\"]); ",
+									"pm.environment.set(\"Authorization\", body[\"resources\"][\"results\"][\"headers\"][\"Authorization\"]); ",
+									"pm.environment.set(\"jobresulsturl\", body[\"resources\"][\"results\"][\"url\"]); ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_domain}}/bim360/modelset-index/v1/containers/{{mc_containter_id}}/modelsets/{{modelset_id}}/jobs/{{jobId}}",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"bim360",
+								"modelset-index",
+								"v1",
+								"containers",
+								"{{mc_containter_id}}",
+								"modelsets",
+								"{{modelset_id}}",
+								"jobs",
+								"{{jobId}}"
+							]
+						},
+						"description": "levels of all project memebers for Checklist permissions. consistent to what in UI >> Project Management >>CheckList Permissions.\nresponse>>data[item].attributes.levels\nBasic in UI is 'None' in API."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Index Query Result File (large file, better download as file)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d8f5984-b54d-40ae-acad-e5f1936be286",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"x-amz-security-token\", body[\"headers\"][\"x-amz-security-token\"]); ",
+									"pm.environment.set(\"X-Amz-Date\", body[\"headers\"][\"X-Amz-Date\"]); ",
+									"pm.environment.set(\"X-Amz-Content-SHA256\", body[\"headers\"][\"X-Amz-Content-SHA256\"]); ",
+									"pm.environment.set(\"Authorization\", body[\"headers\"][\"Authorization\"]); ",
+									"pm.environment.set(\"fieldsurl\", body[\"url\"]); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-security-token",
+								"type": "text",
+								"value": "{{x-amz-security-token}}"
+							},
+							{
+								"key": "X-Amz-Date",
+								"type": "text",
+								"value": "{{X-Amz-Date}}"
+							},
+							{
+								"key": "X-Amz-Content-SHA256",
+								"type": "text",
+								"value": "{{X-Amz-Content-SHA256}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{Authorization}}"
+							}
+						],
+						"url": {
+							"raw": "{{jobresulsturl}}",
+							"host": [
+								"{{jobresulsturl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OAuth 2 - Xiaodong Autodesk -BIM 360 API Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests [\"Status code is 200\"] =responseCode.code === 200 ;",
+							"tests [\"Content-Type is present\"] =responseHeaders.hasOwnProperty (\"Content-Type\") ;",
+							"tests [\"Content-Type is json\"] =postman.getResponseHeader (\"Content-Type\").indexOf (\"application/json\") !== -1 ;",
+							"",
+							"var data =JSON.parse (responseBody) ;",
+							"tests [\"Bearer ok\"] =data.access_token !== '' ;",
+							"",
+							"postman.setEnvironmentVariable (\"access_token\", data.access_token) ;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "access_token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "data:read data:write account:read account:write account:read",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_domain}}/authentication/v1/authenticate",
+					"host": [
+						"{{base_domain}}"
+					],
+					"path": [
+						"authentication",
+						"v1",
+						"authenticate"
+					]
+				},
+				"description": "https://developer.autodesk.com/api/view-and-data-api/#create-an-oauth2-token\n"
+			},
+			"response": []
+		}
+	]
+}
